@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
+import { useGetContactsQuery } from '../../redux/contactsApi';
 
 export const ContactList = ({ onDelete }) => {
   const contacts = useSelector(getContacts);
