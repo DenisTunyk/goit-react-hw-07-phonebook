@@ -5,8 +5,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 import { addContact } from 'redux/contactsSlice';
+//import { useGetContactsQuery } from 'redux/contactsApi';
 
 export const ContactForm = () => {
+  // const data = useGetContactsQuery();
+  // console.log(data);
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
