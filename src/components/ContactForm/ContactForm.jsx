@@ -12,7 +12,7 @@ export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const [addContact, { isLoading }] = useAddContactsMutation();
+  const [addContact] = useAddContactsMutation();
   const { data } = useGetContactsQuery();
 
   const loginInputName = nanoid();
