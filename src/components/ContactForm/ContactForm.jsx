@@ -2,17 +2,18 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import './ContactForm.module.css';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
-//import { useGetContactsQuery } from 'redux/contactsApi';
+// import { useSelector } from 'react-redux';
+// import { getContacts } from 'redux/selectors';
+// import { addContact } from 'redux/contactsSlice';
+import { useAddContactsMutation } from 'redux/contactsApi';
+import { useGetContactsQuery } from 'redux/contactsApi';
 
 export const ContactForm = () => {
-  // const data = useGetContactsQuery();
-  // console.log(data);
-
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const [addContact, { isLoading }] = useAddContactsMutation();
+  const { data } = useGetContactsQuery();
 
   const loginInputName = nanoid();
   const loginInputPhone = nanoid();
@@ -32,11 +33,7 @@ export const ContactForm = () => {
     }
   };
 
-  const dispatch = useDispatch();
-
-  const contacts = useSelector(getContacts);
-
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const contact = {
@@ -45,15 +42,20 @@ export const ContactForm = () => {
       number: number,
     };
 
-    const isSet = contacts.find(
+    const isSet = data.find(
       item => item.name.toLowerCase() === name.toLowerCase()
     );
 
-    if (!isSet) {
-      dispatch(addContact(contact));
-    } else {
-      alert(`${name} is already is contact`);
+    try {
+      if (!isSet) {
+        addContact(contact);
+      } else {
+        alert(`${name} is already is contact`);
+      }
+    } catch (error) {
+      console.log(error.message);
     }
+
     reset();
   };
 

@@ -1,16 +1,14 @@
 import './ContactList.module.css';
 import { useSelector } from 'react-redux';
 import { getFilter } from 'redux/selectors';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
 import { useGetContactsQuery } from '../../redux/contactsApi';
+import { useDeleteContactsMutation } from '../../redux/contactsApi';
 
 export const ContactList = ({ onDelete }) => {
-  const dispatch = useDispatch();
   const filter = useSelector(getFilter);
+  const [deleteContacts, { isLoading }] = useDeleteContactsMutation();
 
   const { data } = useGetContactsQuery();
-  console.log(data);
 
   const visibleContact = data.filter(item =>
     item.name.toLowerCase().includes(filter.toLowerCase())
@@ -22,7 +20,9 @@ export const ContactList = ({ onDelete }) => {
         <li key={id}>
           <span>{name}:</span>
           <span> {phone}</span>
-          <button onClick={() => dispatch(deleteContact(id))}>Delete</button>
+          <button onClick={() => deleteContacts(id)}>
+            {isLoading ? 'Deleting...' : 'Delete'}
+          </button>
         </li>
       ))}
     </ul>
