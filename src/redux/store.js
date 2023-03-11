@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { filterReducer } from './filterSlice';
-import { contactsReducer } from './contactsSlice';
+// import { contactsReducer } from './contactsSlice';
 
 import {
-  persistStore,
-  persistReducer,
+  //persistStore,
+  // persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -12,20 +12,20 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
 import { contactsApi } from './contactsApi';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+// };
 
-const persistedReducer = persistReducer(persistConfig, contactsReducer);
+// const persistedReducer = persistReducer(persistConfig, contactsReducer);
 
 export const store = configureStore({
   reducer: {
     filter: filterReducer,
-    contacts: persistedReducer,
+    // contacts: persistedReducer,
     [contactsApi.reducerPath]: contactsApi.reducer,
   },
   middleware: getDefaultMiddleware =>
@@ -36,4 +36,4 @@ export const store = configureStore({
     }).concat(contactsApi.middleware),
 });
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
