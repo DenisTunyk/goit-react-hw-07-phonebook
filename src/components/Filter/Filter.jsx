@@ -15,9 +15,8 @@ export const Filter = () => {
 
   const onChange = e => {
     setFilterStr(e.currentTarget.value);
+    dispatch(setFilter(filterStr));
   };
-
-  dispatch(setFilter(filterStr));
 
   const inputFilter = nanoid();
   return (
